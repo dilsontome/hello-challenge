@@ -1,0 +1,26 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: {{ include "v0.name" . }}
+spec:
+  hosts:
+    - "*"
+  gateways:
+  - {{ include "v0.name" . }}
+  http:
+  - match:
+    - uri:
+        prefix: /
+    route:
+    - destination:
+        host: {{ include "v0.fullname" . }}
+        port:
+          number: 8090
+        subset: v1
+      weight: 90
+    - destination:
+        host: {{ include "v0.fullname" . }}
+        port:
+          number: 8090
+        subset: v2
+      weight: 10

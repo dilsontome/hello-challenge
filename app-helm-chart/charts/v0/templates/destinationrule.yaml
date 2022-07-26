@@ -1,0 +1,16 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: {{ include "v0.name" . }}
+spec:
+  host: {{ include "v0.fullname" . }}
+  subsets:
+    - labels:
+        version: v1
+      name: v1
+    - labels:
+        version: "v2"
+      name: v2
+  trafficPolicy:
+    loadBalancer:
+      simple: ROUND_ROBIN

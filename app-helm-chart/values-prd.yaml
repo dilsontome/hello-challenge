@@ -1,0 +1,21 @@
+replicaCount: 1
+
+global:
+  autoscaling:
+    enabled: true
+    minReplicas: 2
+    maxReplicas: 20
+    targetCPUUtilizationPercentage: 80
+    # targetMemoryUtilizationPercentage: 80
+  istio:
+    enabled: true
+    service:
+      name: adentis
+    ingress:
+      port: 80
+    virtualservice:
+      v1-weight: 90
+      v2-weight: 10
+    hosts:
+    - host: "dilson-adentis.nsupdate.info"
+    certificate: dilson-adentis-cert-prod
